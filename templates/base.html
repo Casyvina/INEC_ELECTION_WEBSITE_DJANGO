@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="This is a HomeView.">
+   <meta name="author" content="casyvina">
+   {% block title %}
+   <title>INEI Election Scores </title>
+   {% endblock %}
+   <link rel="icon" href="assets/imgs/favicon.ico" type="image/ico">
+   <!-- font icons -->
+   <link rel="stylesheet" href="{% static 'website/vendors/themify-icons/css/themify-icons.css' %}">
+   <!-- Bootstrap + Steller  -->
+   <link rel="stylesheet" href="{% static 'website/css/casyvina.css' %}">
+</head>
+<body>
+
+    {% include 'navbar.html'%}
+
+
+    <div class="container"><br><br>
+
+
+        {% block content %}
+
+
+        {% endblock content %}
+
+    </div>
+
+
+<!-- core  -->
+<script src="{% static 'website/vendors/jquery/jquery-3.4.1.js' %}"></script>
+<script src="{% static 'website/vendors/bootstrap/bootstrap.bundle.js' %}"></script>
+
+</body>
+</html>

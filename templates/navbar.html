@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-secondary rounded shadow mb-3">
+    <div class="container">
+       <a class="navbar-brand" href="{% url 'home' %}">INEC ELECTION </a>
+       <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto"> 
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">View PollngUnit Scores</a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'lga-score' %}">View LGA Scores</a>
+             </li>
+
+             {% if request.user.is_authenticated %}
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'upload-score' %}">Upload Score</a>
+             </li>
+
+             <li class="nav-item">
+                <a href="{% url 'logout'%}" class="ml-4 mt-1 btn btn-light btn-sm">Logout</a>
+             </li>
+             {% else %}
+             <li class="nav-item">
+                <a href="{% url 'login'%}" class="ml-4 mt-1 btn btn-light btn-sm">Login</a>
+             </li>
+             <li class="nav-item">
+                <a href="{% url 'signup'%}" class="ml-4 mt-1 btn btn-light btn-sm">SignUp</a>
+             </li>
+             {% endif %}
+
+          </ul>                       
+       </div>
+    </div>
+ </nav>
