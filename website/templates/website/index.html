@@ -2,6 +2,82 @@
 
 {% block content %}
 
-<h2>Welcome to Polling Unit Page</h2>
+<h2>Welcome To Polling Unit Score</h2>
+<br>
+<br>
+<small>To View any polling unit score, kindly complete the list below: </small>
+<hr>
+
+<!-- <form method="post">
+    {% csrf_token %}
+    {{ form.media.js }}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form> -->
+
+<form class="col gx-3 gy-2 align-items-center" method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+    {{ form.media.js }}
+    <div class="row">
+        <div class="col-auto" >
+            <label for="StateID">Select the State: </label>
+          </div>
+          <div class="col-sm-3">
+            <select class="form-control" id="specificSizeSelect" name="state">
+              <option>Choose...</option>
+              <!-- {% for polling_unit in distinct_ids %}
+              <option value="{{ polling_unit }}">{{ polling_unit }}</option>
+              {% endfor %} -->
+            </select>
+          </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-auto" >
+            <label for="LGAID">Select the Local-Govt: </label>
+          </div>
+          <div class="col-sm-3">
+            <select class="form-control" id="specificSizeSelect" name="lga">
+              <option>Choose...</option>
+              <!-- {% for polling_unit in distinct_ids %}
+              <option value="{{ polling_unit }}">{{ polling_unit }}</option>
+              {% endfor %} -->
+            </select>
+          </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-auto" >
+            <label for="WardID">Select the Ward: </label>
+          </div>
+          <div class="col-sm-3">
+            <select class="form-control" id="specificSizeSelect" name="ward">
+              <option>Choose...</option>
+              <!-- {% for polling_unit in distinct_ids %}
+              <option value="{{ polling_unit }}">{{ polling_unit }}</option>
+              {% endfor %} -->
+            </select>
+          </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-auto" >
+            <label for="pollingUnitID">Select the Polling Unit: </label>
+          </div>
+          <div class="col-sm-3">
+            <select class="form-control" id="specificSizeSelect" name="polling_unit">
+              <option>Choose...</option>
+              <!-- {% for polling_unit in distinct_ids %}
+              <option value="{{ polling_unit }}">{{ polling_unit }}</option>
+              {% endfor %} -->
+            </select>
+          </div>
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">View Votes</button>
+    </div>
+  </form>
+
 
 {% endblock content %}
