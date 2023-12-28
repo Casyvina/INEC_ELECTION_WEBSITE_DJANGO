@@ -50,7 +50,7 @@ class PollingUnit(models.Model):
     user_ip_address = models.GenericIPAddressField("user_ip_address", null=True)
 
     def __str__(self):
-        return self.polling_unit_name
+        return self.polling_unit_number
     
 class Party(models.Model):
     id = models.AutoField(primary_key=True)

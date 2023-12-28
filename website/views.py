@@ -1,14 +1,30 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm
+from .forms import UserCreationForm, LoginForm, PollingForm
 from django.contrib.auth.decorators import login_required
+from .models import State, LGA, Ward, PollingUnit
 
 
 # Create your views here.
 # Home page
 def index(request):
-    return render(request, 'website/index.html')
+
+    form = PollingForm()
+    if request.method == 'POST':
+        form = PollingForm(request.POST)
+        if form.is_valid():
+            selected_state = form.cleaned_data['state']
+            selected_lga = form.cleaned_data['lga']
+            selected_ward = form.cleaned_data['ward']
+            selected_polling_unit = form.cleaned_data['polling_unit']
+            # ... use these values for filtering
+            print(selected_state)
+            print(selected_lga)
+            print(selected_ward)
+            print(selected_polling_unit)
+                   
+    return render(request, 'website/index.html', {'form':form})
 
 def lga_score(request):
     return render(request, 'website/lga_score.html')
