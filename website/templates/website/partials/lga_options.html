@@ -1,0 +1,13 @@
+<div class="col-auto">
+    <label for="lga">Select Lga:</label>
+</div>
+<select class="col-sm-4 form-control"
+    name="lga"
+    hx-get="{% url 'get_wards_for_lga' %}" 
+    hx-trigger="change" 
+    hx-target="#ward-container">
+        <option value="">Select LGA</option>
+        {% for lga in lgas %}
+            <option value="{{ lga.lga_id }}">{{ lga.lga_name }}</option>
+        {% endfor %}
+</select>

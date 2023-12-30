@@ -4,38 +4,49 @@
 
 <h2>Welcome To Polling Unit Score</h2>
 <br>
-<br>
 <small>To View any polling unit score, kindly complete the list below: </small>
 <hr>
 
-<!-- <form method="POST" class="col gx-3 gy-2 align-items-center">
+  <form class="col gx-3 gy-2 align-items-center" method="POST" hx-post="/announce-result/">
     {% csrf_token %}
-    {{ form.media.js }}
-    <div class="col-sm-3 form-control">
-      {{ form.as_p }}
-    </div>
- 
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary">View Votes</button>
-    </div>
-</form> -->
 
-  <form class="col gx-3 gy-2 align-items-center" method="POST">
-    {% csrf_token %}
-    {{ form.media.js }}
-    {% for field in form %}
-    <div class="row">
-        <div class="col-sm-3">
-          <label for="{{ field.id_for_label }}">Select the {{ field.label }}: </label>
+        <div class="row">
+            <div class="col-auto">
+                <label for="state">Select State:</label>
+            </div>  
+            <select class="col-sm-4 form-control"
+            id="state" name="state" 
+            hx-get="{% url 'get_lgas_for_state' %}" 
+            hx-trigger="change" 
+            hx-target="#lga-container">
+                <option value="">Select State</option>
+                {% for state in states %}
+                <option value="{{ state.id }}">{{ state.name }}</option>
+                {% endfor %}
+            </select>                
         </div>
-        <div class="col-sm-6">
-            {{ field.as_widget }} </div>
-    </div>
-    <br>
-    {% endfor %}
-    <div class="col-auto">
+            <br>
+
+        <div id="lga-container" class="row">
+            {% include 'website/partials/lga_options.html' %}
+        </div>
+
+            <br>
+
+        <div id="ward-container" class="row">
+            {% include 'website/partials/ward_options.html' %}
+        </div>
+        
+            <br>
+
+        <div id="polling-unit-container" class="row">
+            {% include 'website/partials/polling_unit_options.html' %}
+        </div>
+
+        <div class="col-auto">
         <button type="submit" class="btn btn-primary">View Votes</button>
-    </div>
+        </div>
+
   </form>
 
 {% endblock content %}

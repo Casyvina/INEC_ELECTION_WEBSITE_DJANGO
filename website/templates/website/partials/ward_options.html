@@ -1,0 +1,13 @@
+<div class="col-auto">
+    <label for="ward">Select Ward:</label>
+</div>
+<select class="col-sm-4 form-control"
+    name="ward"
+    hx-get="{% url 'get_polling_units_for_ward' %}" 
+    hx-trigger="change" 
+    hx-target="#polling-unit-container">
+        <option value="">Select Ward</option>
+        {% for ward in wards %}
+            <option value="{{ ward.ward_id }}">{{ ward.ward_name }}</option>
+        {% endfor %}
+</select>

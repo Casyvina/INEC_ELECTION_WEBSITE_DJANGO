@@ -12,8 +12,8 @@ class State(models.Model):
 class LGA(models.Model):
     id = models.AutoField(primary_key=True)
     lga_id = models.PositiveIntegerField()
-    lga_name = models.CharField("lga_name", max_length=50)
-    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    lga_name = models.CharField("lga_name", max_length=50,)
+    state = models.ForeignKey(State, on_delete=models.CASCADE,)
     lga_description = models.TextField("lga_description")
     entered_by_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     date_entered = models.DateTimeField("date_entered", auto_now=True, blank=True)
@@ -22,12 +22,16 @@ class LGA(models.Model):
     def __str__(self):
         return self.lga_name
     
+    class Meta:
+        unique_together = ('state', 'lga_id')
+    
     
 class Ward(models.Model):
     id = models.AutoField(primary_key=True)
     ward_id = models.PositiveIntegerField()
     ward_name = models.CharField("ward_name", max_length=50)
     lga = models.ForeignKey(LGA, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
     ward_description = models.TextField("ward_description")
     entered_by_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     date_entered = models.DateTimeField("date_entered", auto_now=True, blank=True)
@@ -36,9 +40,14 @@ class Ward(models.Model):
     def __str__(self):
         return self.ward_name
     
+    class Meta:
+        unique_together = ('state', 'lga', 'ward_id')
+    
 class PollingUnit(models.Model):
     id = models.AutoField(primary_key=True)
     polling_unit_id = models.PositiveIntegerField()
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    lga = models.ForeignKey(LGA, on_delete=models.CASCADE)
     ward = models.ForeignKey(Ward, on_delete=models.CASCADE)
     polling_unit_number = models.CharField("polling_unit_number", max_length=50)
     polling_unit_name = models.CharField("polling_unit_name", max_length=50)
@@ -50,15 +59,17 @@ class PollingUnit(models.Model):
     user_ip_address = models.GenericIPAddressField("user_ip_address", null=True)
 
     def __str__(self):
-        return self.polling_unit_number
+        return self.polling_unit_name
+    
+    class Meta:
+        unique_together = ('state', 'lga', 'ward', 'polling_unit_id', 'polling_unit_number')
     
 class Party(models.Model):
     id = models.AutoField(primary_key=True)
-    party_name = models.CharField("name", max_length=100, unique=True)
-    party_id = models.CharField("name_abbr", max_length=4, unique=True)
+    name = models.CharField("name_abbr", max_length=4, unique=True)
     
     def __str__(self):
-        return self.party_name
+        return self.name
     
 class AnnouncedPuResult(models.Model):
     id = models.AutoField(primary_key=True)
