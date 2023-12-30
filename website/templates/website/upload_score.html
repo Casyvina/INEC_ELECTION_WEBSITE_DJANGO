@@ -4,4 +4,69 @@
 
 <h2>Welcome to Upload Result Page</h2>
 
+<br>
+
+<form method="post" hx-post="/announce-result/">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="state">Select State:</label>
+        </div>  
+        <select class="col-sm-4 form-control"
+        id="state" name="state" 
+        hx-get="{% url 'get_lgas_for_state' %}" 
+        hx-trigger="change" 
+        hx-target="#lga-container">
+            <option value="">Select State</option>
+            {% for state in states %}
+            <option value="{{ state.id }}">{{ state.name }}</option>
+            {% endfor %}
+        </select>                
+    </div>
+        <br>
+
+    <div id="lga-container" class="row">
+        {% include 'website/partials/lga_options.html' %}
+    </div>
+
+        <br>
+
+    <div id="ward-container" class="row">
+        {% include 'website/partials/ward_options.html' %}
+    </div>
+    
+        <br>
+
+    <div id="polling-unit-container" class="row">
+        {% include 'website/partials/polling_unit_options.html' %}
+    </div>
+
+        <br>
+
+    <div id="announced_party" class="row">
+        <div class="col-sm-2">
+            <label for="party">Select Party:</label>
+        </div>
+        <select class="col-sm-2 form-control"
+        name="party" id="party">
+            <option value="">Select Party</option>
+            {% for party in parties %}
+                <option value="{{ party.id }}">{{ party.name }}</option>
+            {% endfor %}
+        </select>
+        <label for="party_score" class="col-sm-2">Enter Party Score:</label>
+        <input type="number" id="party_score" name="party_score" class="form-control col-sm-2"></label>
+
+    </div>
+    
+        <br>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">View Votes</button>
+    </div>
+
+
+</form>
+
 {% endblock content %}

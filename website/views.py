@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, PollingForm
 from django.contrib.auth.decorators import login_required
-from .models import State, LGA, Ward, PollingUnit, AnnouncedPuResult
+from .models import State, LGA, Ward, PollingUnit, AnnouncedPuResult, Party
 from django.http import HttpResponseBadRequest
 
 
@@ -32,11 +32,17 @@ def index_(request):
     return render(request, 'website/index.html', {'form':form})
 
 def lga_score(request):
-    return render(request, 'website/lga_score.html')
+    states= State.objects.all()
+    context = {'states': states }
+    return render(request, 'website/lga_score.html', context)
 
 @login_required(login_url='/login')
 def upload_score(request):
-    return render(request, 'website/upload_score.html')
+    states = State.objects.all()
+    parties= Party.objects.all()
+    context = {'states': states,
+               'parties': parties}
+    return render(request, 'website/upload_score.html', context)
 
 def user_signup(request):
     if request.method == 'POST':
@@ -67,8 +73,7 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
-def index(request):
-    
+def index(request): 
     states = State.objects.all()
     context = {'states': states}
     return render(request, 'website/index.html', context)
@@ -79,7 +84,6 @@ def get_lgas_for_state(request):
         state_id = request.GET.get('state')
         if state_id:
             lgas = LGA.objects.filter(state=state_id)
-            print(lgas)
             context = {'lgas': lgas}
             return render(request, 'website/partials/lga_options.html', context)
         else:
@@ -99,7 +103,6 @@ def get_polling_units_for_ward(request):
     if request.method == 'GET':
         ward_id = request.GET.get('ward')
         if ward_id:
-            print(ward_id)
             polling_units = PollingUnit.objects.filter(ward=ward_id)
             context = {'polling_units': polling_units}
             return render(request, 'website/partials/polling_unit_options.html', context)
